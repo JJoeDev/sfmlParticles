@@ -22,6 +22,7 @@ public:
     
 private:
     bool _looping{false};
+    bool _allDead{true};
 
     sf::RenderWindow* _window{nullptr};
 

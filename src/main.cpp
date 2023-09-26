@@ -28,7 +28,7 @@ int main(void){
     float deltaT;
 
     spawner->setParticleAmount(500);
-    spawner->particlesInit(5, sf::Color::Blue, 10, 20, true, true);
+    spawner->particlesInit(5, sf::Color::Blue, 10, 20, true, false);
 
     while(window.isOpen()){
         sf::Event e;

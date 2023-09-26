@@ -3,6 +3,9 @@
 #include "random.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include <iostream>
+#include <algorithm>
+
 pSpawner::pSpawner(const sf::Vector2f& pos, sf::RenderWindow& window){
     _window = &window;
 
@@ -49,12 +52,25 @@ void pSpawner::setParticleAmount(const unsigned int& amount){ // default = 10
 
 void pSpawner::update(const double& deltaT){
     for (Particle* p : particles){
-        // if (!_looping && !p->getIsAlive()) // pure virtual function called error
-        //     delete p;
 
         p->update(deltaT);
         p->render(*_window);
     }
+
+    if (!_looping && particles.size() >= 1){
+        _allDead = std::all_of(particles.begin(), particles.end(), [](Particle* p){
+            return !p->getIsAlive();;
+        });
+
+        if (_allDead){
+            for (Particle* p : particles){
+                delete p;
+            }
+
+            particles.clear();
+        }
+    }
+
 }
 
 void pSpawner::render(){
